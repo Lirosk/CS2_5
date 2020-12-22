@@ -27,7 +27,7 @@ private async Task RecordEntryAsync(string fileEvent, string filePath)
 
 ```
 
-На каждую итерацию службы (Как **FileManager**, так и **DataManager**) запускается отдельный поток из ThreadPool.
+На каждую итерацию службы (как **FileManager**, так и **DataManager**) запускается отдельный поток из ThreadPool.
 
 ```C#
 
