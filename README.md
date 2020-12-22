@@ -44,3 +44,5 @@ ThreadPool.QueueUserWorkItem(Added, path);
 [***FileManger***](https://github.com/Lirosk/CS2_5/tree/main/FileManager) — мониторит посылки от вышестоящего товарища.
 
 [***ServiceLayer***](https://github.com/Lirosk/CS2_5/tree/main/ServiceLayer) — помещает таблицу в *.xml* файл, кладет рядом его *.xsd*.
+
+Конец, спасибо 😊
