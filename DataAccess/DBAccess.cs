@@ -1,8 +1,23 @@
-﻿using System;using System.Collections.Generic;using System.Data.SqlClient;using System.Threading.Tasks;using Extensions;using Parsers;using System.Reflection;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
+using Extensions;
+using Parsers;
+using System.Reflection;
 using Models;
 using Models.Result;
 
-namespace DataAccess{	public class DBAccess	{		public readonly SqlConnection connection;		public Task<Result<T>> GetTable<T>(string commandPath) where T : new()		{			return Task.Run(() =>			{
+namespace DataAccess
+{
+	public class DBAccess
+	{
+		public readonly SqlConnection connection;
+
+		public Task<Result<T>> GetTable<T>(string commandPath) where T : new()
+		{
+			return Task.Run(() =>
+			{
 				try
 				{
 					connection.Open();
@@ -39,4 +54,20 @@ namespace DataAccess{	public class DBAccess	{		public readonly SqlConnection
 				finally
 				{
 					connection.Close();
-				}			});		}		public DBAccess(SqlConnection connection)		{			this.connection = connection;		}		public DBAccess(string connectionString)		{			connection = new SqlConnection(connectionString);		}		public DBAccess() { }	}}
+				}
+			});
+		}
+
+		public DBAccess(SqlConnection connection)
+		{
+			this.connection = connection;
+		}
+
+		public DBAccess(string connectionString)
+		{
+			connection = new SqlConnection(connectionString);
+		}
+
+		public DBAccess() { }
+	}
+}
