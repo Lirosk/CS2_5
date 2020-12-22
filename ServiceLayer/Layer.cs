@@ -10,13 +10,16 @@ namespace ServiceLayer
 {
 	public class Layer
 	{
-		public static void GenerateResultFiles(Result<object> res, string path, string name)
+		public static async Task GenerateResultFilesAsync(Result<object> res, string path, string name)
 		{
-			MethodInfo toList = typeof(Layer).GetMethod("ToList", BindingFlags.NonPublic | BindingFlags.Static);
-			toList = toList.MakeGenericMethod(res.TypeOfTable);
-			var list = toList.Invoke(null, new object[] { res.Table });
+			await Task.Run(async () =>
+			{
+				MethodInfo toList = typeof(Layer).GetMethod("ToList", BindingFlags.NonPublic | BindingFlags.Static);
+				toList = toList.MakeGenericMethod(res.TypeOfTable);
+				var list = toList.Invoke(null, new object[] { res.Table });
 
-			GenerateResultXmlAndXsdAsync(path, name, list);
+				GenerateResultXmlAndXsdAsync(path, name, list);
+			});
 		}
 
 		private static async Task GenerateResultXmlAndXsdAsync(string path, string name, object obj)
