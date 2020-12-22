@@ -11,11 +11,11 @@ namespace Extensions
 	{
 		public static IEnumerable<TEntity> Execute<TEntity>(this SqlCommand command) where TEntity : new()
 		{
-			var result = ExecuteInternal<TEntity>(command);
+			var result = ExecuteInternal<TEntity>(command).Result;
 			return result;
 		}
 
-		private static IEnumerable<TEntity> ExecuteInternal<TEntity>(SqlCommand command) where TEntity : new()
+		private static async Task<IEnumerable<TEntity>> ExecuteInternal<TEntity>(SqlCommand command) where TEntity : new()
 		{
 			var reader = command.ExecuteReader();
 
@@ -25,14 +25,13 @@ namespace Extensions
 				return Enumerable.Empty<TEntity>();
 			}
 
-			reader.ParseFromReaderInternal<TEntity>().Wait();
-			var entities = reader.ParseFromReaderInternal<TEntity>().Result;
+			var entities = await reader.ParseFromReaderInternalAsync<TEntity>();
 			reader.Close();
 
 			return entities;
 		}
 
-		private static Task<IEnumerable<TEntity>> ParseFromReaderInternal<TEntity>(this SqlDataReader reader) where TEntity : new()
+		private static Task<IEnumerable<TEntity>> ParseFromReaderInternalAsync<TEntity>(this SqlDataReader reader) where TEntity : new()
 		{
 			return Task.Run(() =>
 			{
