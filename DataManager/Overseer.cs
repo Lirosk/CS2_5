@@ -58,7 +58,7 @@ namespace DataManager
 				GetStreamWriter(path, 10_000).Dispose();
 
 				var result = GetResult(path);
-				Layer.GenerateResultFiles(result, targetDirectorPath, "result");
+				Layer.GenerateResultFilesAsync(result, targetDirectorPath, "result");
 			}
 			catch (Exception ex)
 			{
@@ -68,7 +68,7 @@ namespace DataManager
 
 		private Result<object> GetResult(string file)
 		{
-			return dbAccess.GetTable<object>(file);
+			return dbAccess.GetTable<object>(file).Result;
 		}
 
 		private async void DeleteAsync(object sender, FileSystemEventArgs e)
